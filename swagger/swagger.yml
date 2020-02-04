@@ -12,7 +12,7 @@ info:
     url: 'http://opensource.org/licenses/MIT'
   version: 3.0.0
 servers:
-  - url: 'https://appnizi-api.azurewebsites.net/api'
+  - url: 'https://niziapp.azurewebsites.net/api'
 paths:
   '/v1/consumption/{consumptionId}':
     delete:
