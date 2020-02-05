@@ -12,7 +12,7 @@ namespace AppNiZiAPI.Models.Repositories
    public class FoodRepository: IFoodRepository
     {
         //change to Id
-        public async Task<Food> SelectAsync(int foodId, int minKcal, int maxKcal)
+        public async Task<Food> SelectAsync(int foodId)
         {
             Food food = new Food();
             SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection"));
@@ -20,7 +20,7 @@ namespace AppNiZiAPI.Models.Repositories
             {
 
                 conn.Open();
-                var text = $"SELECT Food.*, WeightUnit.unit from Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id where food.id = '{foodId}' AND KCal BETWEEN '{minKcal}' AND '{maxKcal}'";
+                var text = $"SELECT Food.*, WeightUnit.unit from Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id where food.id = '{foodId}'";
 
                 using (SqlCommand cmd = new SqlCommand(text, conn))
                 {
@@ -46,7 +46,7 @@ namespace AppNiZiAPI.Models.Repositories
             }
             return food;
         }
-        public async Task<List<Food>> Search(string foodname,int count)
+        public async Task<List<Food>> Search(string foodname,int count, int minKcal, int maxKcal)
         {
             
             List<Food> foods = new List<Food>();
@@ -55,7 +55,7 @@ namespace AppNiZiAPI.Models.Repositories
             {
 
                 conn.Open();
-                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '{foodname}%'";
+                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '{foodname}%' AND food.KCal BETWEEN '{minKcal}' AND '{maxKcal}'";
                 SqlCommand sqlCmd = new SqlCommand(text, conn);
                 //sqlCmd.Parameters.Add("@COUNT", SqlDbType.Int).Value = count;
                 using (sqlCmd)

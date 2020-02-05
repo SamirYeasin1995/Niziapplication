@@ -105,18 +105,14 @@ namespace AppNiZiAPI.Services
             return dictionary;
         }
 
-        public async Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodById(int id, HttpRequest req)
+        public async Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodById(int id)
         {
             Dictionary<ServiceDictionaryKey, object> dictionary = new Dictionary<ServiceDictionaryKey, object>();
 
-            double minKcal;
-            double maxKcal;
+            
 
             try
             {
-                minKcal = Convert.ToInt32(req.Query["minKcal"]);
-                maxKcal = Convert.ToInt32(req.Query["maxKcal"]);
-
                 Food food = await _foodRepository.SelectAsync(id, minKcal, maxKcal);
 
                 if (food.FoodId <= 0)
@@ -137,9 +133,12 @@ namespace AppNiZiAPI.Services
             return dictionary;
         }
 
-        async public Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodBySearch(string searchQuery, int count)
+        async public Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodBySearch(string searchQuery, int count, HttpRequest req)
         {
             Dictionary<ServiceDictionaryKey, object> dictionary = new Dictionary<ServiceDictionaryKey, object>();
+
+            double minKcal;
+            double maxKcal;
 
             if (count <= 0)
             {
@@ -148,7 +147,10 @@ namespace AppNiZiAPI.Services
             }
             try
             {
-                List<Food> foods = await _foodRepository.Search(searchQuery, count);
+                minKcal = Convert.ToInt32(req.Query["minKcal"]);
+                maxKcal = Convert.ToInt32(req.Query["maxKcal"]);
+
+                List<Food> foods = await _foodRepository.Search(searchQuery, count, minKcal, maxKcal);
 
                 if (foods.Count <= 0)
                 {
