@@ -19,7 +19,7 @@ namespace AppNiZiAPI.Services
         IMessageHandler FeedbackHandler { get; }
 
         Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodById(int id);
-        Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodBySearch(string searchQuery, int count);
+        Task<Dictionary<ServiceDictionaryKey, object>> TryGetFoodBySearch(string searchQuery, int count, HttpRequest req);
         Task<Dictionary<ServiceDictionaryKey, object>> TryGetFavoriteFood(int patientId);
         Task<Dictionary<ServiceDictionaryKey, object>> TryPostFavoriteFood(HttpRequest request);
         Task<Dictionary<ServiceDictionaryKey, object>> TryDeleteFavoriteFood(HttpRequest request);
@@ -109,11 +109,9 @@ namespace AppNiZiAPI.Services
         {
             Dictionary<ServiceDictionaryKey, object> dictionary = new Dictionary<ServiceDictionaryKey, object>();
 
-            
-
             try
             {
-                Food food = await _foodRepository.SelectAsync(id, minKcal, maxKcal);
+                Food food = await _foodRepository.SelectAsync(id);
 
                 if (food.FoodId <= 0)
                 {
@@ -137,8 +135,8 @@ namespace AppNiZiAPI.Services
         {
             Dictionary<ServiceDictionaryKey, object> dictionary = new Dictionary<ServiceDictionaryKey, object>();
 
-            double minKcal;
-            double maxKcal;
+            int minKcal;
+            int maxKcal;
 
             if (count <= 0)
             {

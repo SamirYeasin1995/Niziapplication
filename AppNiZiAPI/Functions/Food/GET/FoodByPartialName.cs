@@ -28,6 +28,8 @@ namespace AppNiZiAPI.Functions.Food
     {
         [FunctionName("FoodByPartialName")]
         [OpenApiOperation("SearchFood", "Food", Summary = "Searches the FoodDB", Description = "Allows you to search the food Database and gets items that start with the supplied letters", Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiParameter("minKcal", Description = "The minimum kcal", In = ParameterLocation.Query, Required = true, Type = typeof(int))]
+        [OpenApiParameter("maxKcal", Description = "The max kcal", In = ParameterLocation.Query, Required = true, Type = typeof(int))]
         [OpenApiResponseBody(HttpStatusCode.OK, "application/json", typeof(Models.Food[]), Summary = Messages.OKUpdate)]
         [OpenApiResponseBody(HttpStatusCode.Unauthorized, "application/json", typeof(Error), Summary = Messages.AuthNoAcces)]
         [OpenApiResponseBody(HttpStatusCode.BadRequest, "application/json", typeof(Error), Summary = Messages.ErrorMissingValues)]
@@ -43,7 +45,7 @@ namespace AppNiZiAPI.Functions.Food
             if (!authResult.Result)
                 return new StatusCodeResult((int)authResult.StatusCode);
 
-            Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IFoodService>().TryGetFoodBySearch(foodName,count);
+            Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IFoodService>().TryGetFoodBySearch(foodName, count, req);
 
 
             return DIContainer.Instance.GetService<IResponseHandler>().ForgeResponse(dictionary);

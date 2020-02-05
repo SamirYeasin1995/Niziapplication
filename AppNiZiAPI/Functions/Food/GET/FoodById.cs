@@ -32,8 +32,6 @@ namespace AppNiZiAPI
     {
         [FunctionName("Food")]
         [OpenApiOperation("GetFoodById", "Food", Summary = "Gets the requested FoodItem", Description = "updates the dietary management of a patient", Visibility = OpenApiVisibilityType.Important)]
-        [OpenApiParameter("minKcal", Description = "The minimum kcal", In = ParameterLocation.Query, Required = true, Type = typeof(int))]
-        [OpenApiParameter("maxKcal", Description = "The max kcal", In = ParameterLocation.Query, Required = true, Type = typeof(int))]
         [OpenApiResponseBody(HttpStatusCode.OK, "application/json", typeof(Food), Summary = Messages.OKUpdate)]
         [OpenApiResponseBody(HttpStatusCode.Unauthorized, "application/json", typeof(Error), Summary = Messages.AuthNoAcces)]
         [OpenApiResponseBody(HttpStatusCode.BadRequest, "application/json", typeof(Error), Summary = Messages.ErrorMissingValues)]
@@ -49,7 +47,7 @@ namespace AppNiZiAPI
                 return new StatusCodeResult((int)authResult.StatusCode);
             #endregion
 
-            Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IFoodService>().TryGetFoodById(foodId, req);
+            Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IFoodService>().TryGetFoodById(foodId);
 
 
             return DIContainer.Instance.GetService<IResponseHandler>().ForgeResponse(dictionary);
