@@ -13,9 +13,9 @@ namespace AppNiZiAPI.Models
         public double Fiber { get; set; }
         public double Calcium { get; set; }
         public double Sodium { get; set; }
+        public double Vocht { get; set; }
         public double PortionSize { get; set; }
         public string WeightUnit { get; set; }
         public string Picture { get; set; }
-
     }
 }
