@@ -12,7 +12,7 @@ namespace AppNiZiAPI.Models.Repositories
    public class FoodRepository: IFoodRepository
     {
         //change to Id
-        public async Task<Food> SelectAsync(int foodId)
+        public async Task<Food> SelectAsync(int foodId, int minKcal, int maxKcal)
         {
             Food food = new Food();
             SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection"));
@@ -20,7 +20,7 @@ namespace AppNiZiAPI.Models.Repositories
             {
 
                 conn.Open();
-                var text = $"SELECT Food.*, WeightUnit.unit from Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id where food.id = '{foodId}'";
+                var text = $"SELECT Food.*, WeightUnit.unit from Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id where food.id = '{foodId}' AND KCal BETWEEN '{minKcal}' AND '{maxKcal}'";
 
                 using (SqlCommand cmd = new SqlCommand(text, conn))
                 {
@@ -36,6 +36,7 @@ namespace AppNiZiAPI.Models.Repositories
                         food.Fiber = (double)reader["fiber"];
                         food.Calcium = (double)reader["calcium"];
                         food.Sodium = (double)reader["sodium"];
+                        food.Vocht = (double)reader["vocht"];
                         food.PortionSize = (double)reader["portion_size"];
                         food.Picture = (string)reader["picture"];
                         food.WeightUnit = (string)reader["unit"];
@@ -74,6 +75,7 @@ namespace AppNiZiAPI.Models.Repositories
                             Fiber = (double)reader["fiber"],
                             Calcium = (double)reader["calcium"],
                             Sodium = (double)reader["sodium"],
+                            Vocht = (double)reader["vocht"],
                             PortionSize = (double)reader["portion_size"],
                             Picture = (string)reader["picture"],
                             WeightUnit = (string)reader["unit"]
@@ -110,6 +112,7 @@ namespace AppNiZiAPI.Models.Repositories
                             Fiber = (double)reader["fiber"],
                             Calcium = (double)reader["calcium"],
                             Sodium = (double)reader["sodium"],
+                            Vocht = (double)reader["vocht"],
                             PortionSize = (double)reader["portion_size"],
                             Picture = (string)reader["picture"],
                             WeightUnit = (string)reader["unit"]
