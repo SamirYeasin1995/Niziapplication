@@ -29,7 +29,7 @@ namespace AppNiZiAPI.Models.Repositories
             using (SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection")))
             {
                 conn.Open();
-                var text = $"SELECT b.description, a.amount, a.is_active, a.patient_id, a.id " +
+                var text = $"SELECT b.description, a.amount, a.is_active, a.patient_id, a.date_added, a.id " +
                     $"FROM DietaryManagement AS a, DietaryRestriction AS b " +
                     $"WHERE a.dietary_restriction_id = b.id AND a.patient_id={patientId}";
 
@@ -48,7 +48,7 @@ namespace AppNiZiAPI.Models.Repositories
                             dietaryManagementModel.Amount = Int32.Parse(reader["amount"].ToString());
                             dietaryManagementModel.PatientId = Int32.Parse(reader["patient_id"].ToString());
                             dietaryManagementModel.IsActive = Convert.ToBoolean(reader["is_active"]);
-
+                            dietaryManagementModel.DateAdded = DateTime.Parse(reader["date_added"].ToString());
                             dietaryManagementModels.Add(dietaryManagementModel);
                         }
                     }
@@ -152,7 +152,8 @@ namespace AppNiZiAPI.Models.Repositories
                                    (dietary_restriction_id,
                                     amount,
                                     patient_id,
-                                    is_active)
+                                    is_active,
+                                    date_added)
                              VALUES
                                    (
                                     (
@@ -162,7 +163,8 @@ namespace AppNiZiAPI.Models.Repositories
                                     ),
                                     @AMOUNT,
                                     @PATIENT,
-                                    @ISACTIVE
+                                    @ISACTIVE,
+                                    @TODAY
                                 )";
 
                 bool succes;
@@ -173,6 +175,7 @@ namespace AppNiZiAPI.Models.Repositories
                     command.Parameters.Add("@AMOUNT", SqlDbType.Int).Value = dietary.Amount;
                     command.Parameters.Add("@PATIENT", SqlDbType.Int).Value = dietary.PatientId;
                     command.Parameters.Add("@ISACTIVE", SqlDbType.Bit).Value = dietary.IsActive;
+                    command.Parameters.Add("@TODAY", SqlDbType.DateTime).Value = DateTime.Now;
                     succes = await command.ExecuteNonQueryAsync() > 0;
                 }
                 catch (Exception e)
