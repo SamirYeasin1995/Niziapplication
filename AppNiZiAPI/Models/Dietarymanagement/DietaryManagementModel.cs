@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AppNiZiAPI.Models.Dietarymanagement
@@ -38,5 +39,12 @@ namespace AppNiZiAPI.Models.Dietarymanagement
         [Required]
         [JsonProperty("Patient")]
         public int PatientId { get; set; }
+
+        /// <summary>
+        /// Date Added
+        /// </summary>
+        [Required]
+        [JsonProperty("DateAdded")]
+        public DateTime DateAdded { get; set; }
     }
 }
