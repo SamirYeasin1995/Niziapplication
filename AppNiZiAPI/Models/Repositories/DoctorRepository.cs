@@ -12,7 +12,7 @@ namespace AppNiZiAPI.Models.Repositories
 {
     class DoctorRepository : IDoctorRepository
     {
-        public List<Patient> GetDoctorPatients(int doctorId)
+        public List<Patient> GetDoctorPatients(int doctorId, string partOfPatientName)
         {
             List<Patient> list = new List<Patient>();
             using (SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection")))
@@ -22,7 +22,7 @@ namespace AppNiZiAPI.Models.Repositories
                 "SELECT p.date_of_birth, p.weight, p.id, a.first_name, a.last_name " +
                 "FROM Patient AS p " +
                 "INNER JOIN Account AS a ON a.id = p.account_id " +
-                "WHERE p.doctor_id = @DOCTORID";
+                $"WHERE p.doctor_id = @DOCTORID AND (a.first_name + ' ' + a.last_name) LIKE '%{partOfPatientName}%'";
 
                 SqlCommand cmd = new SqlCommand(sqlQuery, conn);
                 cmd.Parameters.Add("@DOCTORID", SqlDbType.Int).Value = doctorId;
@@ -262,7 +262,7 @@ namespace AppNiZiAPI.Models.Repositories
 
     public interface IDoctorRepository
     {
-        List<Patient> GetDoctorPatients(int doctorId);
+        List<Patient> GetDoctorPatients(int doctorId, string partOfPatientName);
         DoctorLogin GetLoggedInDoctor(string guid);
         List<DoctorModel> GetDoctors();
         DoctorLogin RegisterDoctor(DoctorLogin newDoctor);

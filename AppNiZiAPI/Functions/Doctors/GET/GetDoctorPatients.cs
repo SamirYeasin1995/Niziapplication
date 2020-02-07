@@ -31,6 +31,7 @@ namespace AppNiZiAPI.Functions.Doctor.GET
         [OpenApiResponseBody(HttpStatusCode.Forbidden, "application/json", typeof(string), Summary = Messages.AuthNoAcces)]
         [OpenApiResponseBody(HttpStatusCode.BadRequest, "application/json", typeof(string), Summary = Messages.ErrorPostBody)]
         [OpenApiParameter("doctorId", Description = "Inserting the doctor id", In = ParameterLocation.Path, Required = true, Type = typeof(int))]
+        [OpenApiParameter("partOfPatientName", Description = "Part of the patient name to get a list of patients with this name", In = ParameterLocation.Query, Required = false, Type = typeof(string))]
         #endregion
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = (Routes.APIVersion + Routes.GetDoctorPatients))] HttpRequest req,
@@ -41,9 +42,9 @@ namespace AppNiZiAPI.Functions.Doctor.GET
             if (!authResult.Result)
                 return new StatusCodeResult((int)authResult.StatusCode);
             #endregion
-
+            string partOfPatientName = req.Query["partOfPatientName"];
             IDoctorRepository doctorRepository = DIContainer.Instance.GetService<IDoctorRepository>();
-            List<Patient> patients = doctorRepository.GetDoctorPatients(doctorId);
+            List<Patient> patients = doctorRepository.GetDoctorPatients(doctorId, partOfPatientName);
 
             return patients != null
                 ? (ActionResult)new OkObjectResult(patients)
