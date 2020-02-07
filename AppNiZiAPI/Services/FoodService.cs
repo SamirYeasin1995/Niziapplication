@@ -148,6 +148,9 @@ namespace AppNiZiAPI.Services
                 minKcal = Convert.ToInt32(req.Query["minKcal"]);
                 maxKcal = Convert.ToInt32(req.Query["maxKcal"]);
 
+                if (maxKcal == 0)
+                    maxKcal = 10000;
+
                 List<Food> foods = await _foodRepository.Search(searchQuery, count, minKcal, maxKcal);
 
                 if (foods.Count <= 0)

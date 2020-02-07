@@ -48,14 +48,13 @@ namespace AppNiZiAPI.Models.Repositories
         }
         public async Task<List<Food>> Search(string foodname,int count, int minKcal, int maxKcal)
         {
-            
             List<Food> foods = new List<Food>();
             SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection"));
             using (conn)
             {
 
                 conn.Open();
-                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '{foodname}%' AND food.KCal BETWEEN '{minKcal}' AND '{maxKcal}'";
+                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '{foodname}%' AND food.kcal BETWEEN {minKcal} AND {maxKcal}";
                 SqlCommand sqlCmd = new SqlCommand(text, conn);
                 //sqlCmd.Parameters.Add("@COUNT", SqlDbType.Int).Value = count;
                 using (sqlCmd)

@@ -3,7 +3,7 @@
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
     "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "DefaultEndpointsProtocol=https;AccountName=appniziapistorage;AccountKey=DL0oq3Ji9IMPhdbiroSNuFCEDu3PKBnaoqu+nbY1MHVKPsQz6kcaxcUKqY4YgNwVirfOnWTrzie8E2Rkc3wySg==",
-    "sqldb_connection": "Server=tcp:niziserver.database.windows.net,1433;Initial Catalog=AppNiziDatabase;Persist Security Info=False;User ID=Niziadmin;Password=QA3G2<)}RL]b)bp$;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "sqldb_connection": "Server=tcp:niziserver.database.windows.net,1433;Initial Catalog=AppNiziDatabase;Persist Security Info=False;User ID=Niziadmin;Password=DbPassword1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
     "OpenApi__Info__Version": "3.0.0",
     "OpenApi__Info__Title": "App Nizi API",
     "OpenApi__Info__Description": "The API for the App Nizi",
