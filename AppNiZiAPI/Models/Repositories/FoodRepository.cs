@@ -36,6 +36,7 @@ namespace AppNiZiAPI.Models.Repositories
                         food.Fiber = (double)reader["fiber"];
                         food.Calcium = (double)reader["calcium"];
                         food.Sodium = (double)reader["sodium"];
+                        food.Water = (double)reader["water"];
                         food.PortionSize = (double)reader["portion_size"];
                         food.Picture = (string)reader["picture"];
                         food.WeightUnit = (string)reader["unit"];
@@ -74,6 +75,7 @@ namespace AppNiZiAPI.Models.Repositories
                             Fiber = (double)reader["fiber"],
                             Calcium = (double)reader["calcium"],
                             Sodium = (double)reader["sodium"],
+                            Water = (double)reader["water"],
                             PortionSize = (double)reader["portion_size"],
                             Picture = (string)reader["picture"],
                             WeightUnit = (string)reader["unit"]
@@ -110,6 +112,7 @@ namespace AppNiZiAPI.Models.Repositories
                             Fiber = (double)reader["fiber"],
                             Calcium = (double)reader["calcium"],
                             Sodium = (double)reader["sodium"],
+                            Water = (double)reader["water"],
                             PortionSize = (double)reader["portion_size"],
                             Picture = (string)reader["picture"],
                             WeightUnit = (string)reader["unit"]

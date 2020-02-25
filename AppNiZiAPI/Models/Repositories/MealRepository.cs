@@ -27,7 +27,7 @@ namespace AppNiZiAPI.Models.Repositories
             }
             StringBuilder sqlQuery = new StringBuilder();
             sqlQuery.Append("INSERT INTO Meal (patient_id, name, kcal,protein,fiber,calcium,sodium,portion_size,weight_unit_id,picture) ");
-            sqlQuery.Append("VALUES (@PATIENT_ID, @NAME, @KCAL,@PROTEIN,@FIBER,@CALCIUM,@SODIUM,@PORTION_SIZE,@WEIGHT_UNIT_ID,@PICTURE) ");
+            sqlQuery.Append("VALUES (@PATIENT_ID, @NAME, @KCAL,@PROTEIN,@FIBER,@CALCIUM,@SODIUM,@WATER,@PORTION_SIZE,@WEIGHT_UNIT_ID,@PICTURE) ");
             using (conn)
             {
 
@@ -40,6 +40,7 @@ namespace AppNiZiAPI.Models.Repositories
                 sqlCmd.Parameters.Add("@FIBER", SqlDbType.Float).Value = meal.Fiber;
                 sqlCmd.Parameters.Add("@CALCIUM", SqlDbType.Float).Value = meal.Calcium;
                 sqlCmd.Parameters.Add("@SODIUM", SqlDbType.Float).Value = meal.Sodium;
+                sqlCmd.Parameters.Add("@WATER", SqlDbType.Float).Value = meal.Water;
                 sqlCmd.Parameters.Add("@PORTION_SIZE", SqlDbType.Int).Value = meal.PortionSize;
                 sqlCmd.Parameters.Add("@WEIGHT_UNIT_ID", SqlDbType.Int).Value = weightunitid ;
                 sqlCmd.Parameters.Add("@PICTURE", SqlDbType.NVarChar).Value = meal.Picture;
@@ -96,6 +97,7 @@ namespace AppNiZiAPI.Models.Repositories
                         meal.Fiber = (double)reader["fiber"];
                         meal.Calcium = (double)reader["calcium"];
                         meal.Sodium = (double)reader["sodium"];
+                        meal.Water = (double)reader["water"];
                         meal.PortionSize = (double)reader["portion_size"];
                         meal.Picture = (string)reader["picture"];
                         meal.WeightUnit = (string)reader["unit"];
@@ -132,6 +134,7 @@ namespace AppNiZiAPI.Models.Repositories
                             Fiber =   (double)reader["fiber"],
                             Calcium = (double)reader["calcium"],
                             Sodium =  (double)reader["sodium"],
+                            Water = (double)reader["water"],
                             PortionSize = (double)reader["portion_size"],
                             Picture = (string)reader["picture"],
                             WeightUnit = (string)reader["unit"]
@@ -162,7 +165,7 @@ namespace AppNiZiAPI.Models.Repositories
             }
             StringBuilder sqlQuery = new StringBuilder();
             sqlQuery.Append("Update Meal ");
-            sqlQuery.Append("set name = @NAME , kcal = @KCAL,protein= @PROTEIN,fiber = @FIBER,calcium =@CALCIUM,sodium =@SODIUM,portion_size = @PORTION_SIZE,weight_unit_id = @WEIGHT_UNIT_ID,picture = @PICTURE ");
+            sqlQuery.Append("set name = @NAME , kcal = @KCAL,protein= @PROTEIN,fiber = @FIBER,calcium =@CALCIUM,sodium =@SODIUM,water=@WATER,portion_size = @PORTION_SIZE,weight_unit_id = @WEIGHT_UNIT_ID,picture = @PICTURE ");
             sqlQuery.Append("WHERE id = @MEAL_ID");
             using (conn)
             {
@@ -177,6 +180,7 @@ namespace AppNiZiAPI.Models.Repositories
                 sqlCmd.Parameters.Add("@FIBER", SqlDbType.Float).Value = meal.Fiber;
                 sqlCmd.Parameters.Add("@CALCIUM", SqlDbType.Float).Value = meal.Calcium;
                 sqlCmd.Parameters.Add("@SODIUM", SqlDbType.Float).Value = meal.Sodium;
+                sqlCmd.Parameters.Add("@WATER", SqlDbType.Float).Value = meal.Sodium;
                 sqlCmd.Parameters.Add("@PORTION_SIZE", SqlDbType.Int).Value = meal.PortionSize;
                 sqlCmd.Parameters.Add("@WEIGHT_UNIT_ID", SqlDbType.Int).Value = weightunitid;
                 sqlCmd.Parameters.Add("@PICTURE", SqlDbType.NVarChar).Value = meal.Picture;
