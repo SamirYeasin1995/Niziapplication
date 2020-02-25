@@ -55,7 +55,7 @@ namespace AppNiZiAPI.Models.Repositories
             {
 
                 conn.Open();
-                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '{foodname}%'";
+                var text = $"SELECT TOP {count} * FROM Food Inner Join WeightUnit On  food.weight_unit_id = WeightUnit.id Where name LIKE '%{foodname}%'";
                 SqlCommand sqlCmd = new SqlCommand(text, conn);
                 //sqlCmd.Parameters.Add("@COUNT", SqlDbType.Int).Value = count;
                 using (sqlCmd)
