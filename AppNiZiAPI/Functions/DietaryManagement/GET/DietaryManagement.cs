@@ -42,9 +42,9 @@ namespace AppNiZiAPI.Functions.DietaryManagement.GET
                 return new UnprocessableEntityObjectResult(Messages.ErrorIncorrectId);
 
             #region AuthCheck
-            AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().AuthForDoctorOrPatient(req, id);
-            if (!authResult.Result)
-                return new StatusCodeResult((int)authResult.StatusCode);
+            //AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().AuthForDoctorOrPatient(req, id);
+            //if (!authResult.Result)
+            //    return new StatusCodeResult((int)authResult.StatusCode);
             #endregion
 
             Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IDietaryManagementService>().TryGetDietaryManagementByPatient(id);

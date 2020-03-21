@@ -47,9 +47,9 @@ namespace AppNiZiAPI.Functions.DietaryManagement.POST
             DietaryManagementModel dietary = new DietaryManagementModel();
             JsonConvert.PopulateObject(requestBody, dietary);
             #region AuthCheck
-            AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().CheckAuthorization(req, dietary.PatientId, true);
-            if (!authResult.Result)
-                return new StatusCodeResult((int)authResult.StatusCode);
+            //AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().CheckAuthorization(req);
+            //if (!authResult.Result)
+            //    return new StatusCodeResult((int)authResult.StatusCode);
             #endregion
 
             Dictionary<ServiceDictionaryKey, object> dictionary = await DIContainer.Instance.GetService<IDietaryManagementService>().TryAddDietaryManagement(dietary);
