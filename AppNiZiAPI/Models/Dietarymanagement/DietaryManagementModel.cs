@@ -36,7 +36,7 @@ namespace AppNiZiAPI.Models.Dietarymanagement
         /// Diet Patient
         /// </summary>
         [Required]
-        [JsonProperty("Patient")]
+        [JsonProperty("PatientId")]
         public int PatientId { get; set; }
     }
 }

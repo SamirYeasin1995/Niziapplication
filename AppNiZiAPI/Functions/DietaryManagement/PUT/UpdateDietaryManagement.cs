@@ -49,7 +49,7 @@ namespace AppNiZiAPI.Functions.DietaryManagement.PUT
 
             DietaryManagementModel dietary = new DietaryManagementModel();
             JsonConvert.PopulateObject(requestBody, dietary);
-            AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().CheckAuthorization(req, dietary.PatientId);
+            AuthResultModel authResult = await DIContainer.Instance.GetService<IAuthorization>().CheckAuthorization(req, dietary.PatientId, true);
             if (!authResult.Result)
                 return new StatusCodeResult((int)authResult.StatusCode);
 
