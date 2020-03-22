@@ -159,7 +159,7 @@ namespace AppNiZiAPI.Models.Repositories
 
                 sqlCmd.Parameters.Add("@DOCTORID", SqlDbType.Int).Value = newPatient.Patient.DoctorId;
 
-                sqlCmd.Parameters.Add("@GUID", SqlDbType.NVarChar).Value = Guid.NewGuid().ToString();
+                sqlCmd.Parameters.Add("@GUID", SqlDbType.NVarChar).Value = newPatient.AuthLogin.Guid;
                 sqlCmd.Parameters.Add("@WEIGHT", SqlDbType.Float).Value = newPatient.Patient.WeightInKilograms;
 
                 sqlConn.Open();
