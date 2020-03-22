@@ -27,6 +27,9 @@ namespace AppNiZiAPI
         [JsonProperty("Sodium")]
         public float Sodium { get; set; }
 
+        [JsonProperty("Water")]
+        public float Water { get; set; }
+
         [Required]
         [JsonProperty("Amount")]
         public int Amount { get; set; }

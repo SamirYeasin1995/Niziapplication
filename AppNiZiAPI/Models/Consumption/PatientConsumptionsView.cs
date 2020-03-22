@@ -12,6 +12,7 @@ namespace AppNiZiAPI
         public float FiberTotal { get; }
         public float CaliumTotal { get; }
         public float SodiumTotal { get; }
+        public float WaterTotal { get; }
 
         public PatientConsumptionsView(List<PatientConsumptionView> consumptions)
         {
@@ -23,6 +24,7 @@ namespace AppNiZiAPI
                 this.FiberTotal += consumption.Fiber;
                 this.CaliumTotal += consumption.Calium;
                 this.SodiumTotal += consumption.Sodium;
+                this.WaterTotal += consumption.Water;
             }
         }
     }

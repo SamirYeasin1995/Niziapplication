@@ -17,6 +17,8 @@ namespace AppNiZiAPI
 
         public float Sodium { get; set; }
 
+        public float Water { get; set; }
+
         public int Amount { get; set; }
 
         public float WeightUnitId { get; set; }
