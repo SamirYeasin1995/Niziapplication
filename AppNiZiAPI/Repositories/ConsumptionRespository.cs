@@ -13,8 +13,8 @@ namespace AppNiZiAPI
         {
             bool added;
             var insert = $"INSERT INTO Consumption " +
-                $"(food_name, kcal, protein, fiber, calium, sodium, water, amount, weight_unit_id, date, patient_id)";
-            var values = $" VALUES (@food_name, @kcal, @protein, @fiber, @calium, @sodium, @water, @amount, @weight_unit_id, @date, @patient_id)";
+                $"(food_name, kcal, protein, fiber, calium, sodium, water, amount, meal_time, weight_unit_id, date, patient_id)";
+            var values = $" VALUES (@food_name, @kcal, @protein, @fiber, @calium, @sodium, @water, @amount, @meal_time, @weight_unit_id, @date, @patient_id)";
             var insertQuery = insert + values;
 
             using (SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection")))
@@ -82,6 +82,7 @@ namespace AppNiZiAPI
                             consumption.Sodium = (float)Convert.ToDouble(reader["sodium"]);
                             consumption.Water = (float)Convert.ToDouble(reader["water"]);
                             consumption.Amount = (int)reader["amount"];
+                            consumption.MealTime = reader["meal_time"].ToString();
                             consumption.Weight = new WeightUnitModel
                             {
                                 Id = (int)reader["weight_unit_id"],
@@ -134,6 +135,7 @@ namespace AppNiZiAPI
                             consumption.Sodium = (float)Convert.ToDouble(reader["sodium"]);
                             consumption.Water = (float)Convert.ToDouble(reader["water"]);
                             consumption.Amount = (int)reader["amount"];
+                            consumption.MealTime = reader["meal_time"].ToString();
                             consumption.Weight = new WeightUnitModel
                             {
                                 Id = (int)reader["weight_unit_id"],
@@ -160,7 +162,8 @@ namespace AppNiZiAPI
             bool updated;
             var updateQuery = $"UPDATE Consumption SET " +
                 $"food_name = @food_name, kcal = @kcal, protein = @protein, fiber = @fiber, " +
-                $"calium = @calium, sodium = @sodium, water = @water, amount = @amount, weight_unit_id = @weight_unit_id, " +
+                $"calium = @calium, sodium = @sodium, water = @water, amount = @amount, meal_time = @meal_time, " +
+                $"weight_unit_id = @weight_unit_id, " +
                 $"date = @date, patient_id = @patient_id " +
                 $"Where Id = {consumptionId}";
             using (SqlConnection conn = new SqlConnection(Environment.GetEnvironmentVariable("sqldb_connection")))
@@ -190,6 +193,7 @@ namespace AppNiZiAPI
             command.Parameters.AddWithValue("@sodium", consumption.Sodium);
             command.Parameters.AddWithValue("@water", consumption.Water);
             command.Parameters.AddWithValue("@amount", consumption.Amount);
+            command.Parameters.AddWithValue("@meal_time", consumption.MealTime);
             command.Parameters.AddWithValue("@weight_unit_id", consumption.WeightUnitId);
             command.Parameters.AddWithValue("@date", consumption.Date);
             command.Parameters.AddWithValue("@patient_id", consumption.PatientId);

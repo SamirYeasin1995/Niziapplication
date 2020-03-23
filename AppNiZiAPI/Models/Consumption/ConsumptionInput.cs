@@ -35,6 +35,10 @@ namespace AppNiZiAPI
         public int Amount { get; set; }
 
         [Required]
+        [JsonProperty("MealTime")]
+        public string MealTime { get; set; }
+
+        [Required]
         [JsonProperty("WeightUnitId")]
         public float WeightUnitId { get; set; }
 

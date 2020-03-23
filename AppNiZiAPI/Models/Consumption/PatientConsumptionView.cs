@@ -16,6 +16,7 @@ namespace AppNiZiAPI
         public float Sodium { get; set; }
         public float Water { get; set; }
         public int Amount { get; set; }
+        public string MealTime { get; set; }
         public WeightUnitModel Weight { get; set; }
         public DateTime Date { get; set; }
 

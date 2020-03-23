@@ -21,6 +21,8 @@ namespace AppNiZiAPI
 
         public int Amount { get; set; }
 
+        public float MealTime { get; set; }
+
         public float WeightUnitId { get; set; }
 
         public DateTime Date { get; set; }
