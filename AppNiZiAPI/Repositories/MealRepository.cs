@@ -26,7 +26,7 @@ namespace AppNiZiAPI.Models.Repositories
                 conn.Close();
             }
             StringBuilder sqlQuery = new StringBuilder();
-            sqlQuery.Append("INSERT INTO Meal (patient_id, name, kcal,protein,fiber,calcium,sodium,portion_size,weight_unit_id,picture) ");
+            sqlQuery.Append("INSERT INTO Meal (patient_id, name, kcal,protein,fiber,calcium,sodium,water,portion_size,weight_unit_id,picture) ");
             sqlQuery.Append("VALUES (@PATIENT_ID, @NAME, @KCAL,@PROTEIN,@FIBER,@CALCIUM,@SODIUM,@WATER,@PORTION_SIZE,@WEIGHT_UNIT_ID,@PICTURE) ");
             using (conn)
             {
