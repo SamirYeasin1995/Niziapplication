@@ -12,6 +12,7 @@ using AppNiZiAPI.Variables;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -98,7 +99,8 @@ namespace AppNiZiAPI.Services
                     DateOfBirth = patient.DateOfBirth,
                     WeightInKilograms = patient.WeightInKilograms,
                     FirstName = patient.FirstName,
-                    LastName = patient.LastName
+                    LastName = patient.LastName,
+                    Email = patient.Email
                 };
 
                 dynamic data = _messageSerializer.Serialize(returnModel);
@@ -115,12 +117,15 @@ namespace AppNiZiAPI.Services
         public async Task<Dictionary<ServiceDictionaryKey, object>> TryListPatients(HttpRequest request)
         {
             Dictionary<ServiceDictionaryKey, object> dictionary = new Dictionary<ServiceDictionaryKey, object>();
-
+            DateTime startDate;
+            DateTime endDate;
             try
             {
                 int amountRequested = _queryHelper.ExtractIntegerFromRequestQuery("count", request);
+                startDate = DateTime.ParseExact(request.Query["startDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                endDate = DateTime.ParseExact(request.Query["endDate"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-                List<Patient> patients = await _patientRepository.List(amountRequested);
+                List<Patient> patients = await _patientRepository.List(amountRequested, startDate, endDate);
                 PatientReturnModel[] returnModels = new PatientReturnModel[patients.Count];
 
                 for (int i = 0; i < patients.Count; i++)

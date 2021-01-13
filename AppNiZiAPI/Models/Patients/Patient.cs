@@ -9,7 +9,7 @@ namespace AppNiZiAPI.Models
         public Patient() { }
 
         public Patient(int patientId, string firstName, string lastName, DateTime dateOfBirth, float weightInKilograms, string guid,
-            int accountId, int doctorId)
+            int accountId, int doctorId, string email)
         {
             PatientId = patientId;
             FirstName = firstName;
@@ -19,6 +19,7 @@ namespace AppNiZiAPI.Models
             Guid = guid;
             AccountId = accountId;
             DoctorId = doctorId;
+            Email = email;
         }
 
         public int PatientId { get; set; }
@@ -29,11 +30,12 @@ namespace AppNiZiAPI.Models
         public DateTime DateOfBirth { get; set; }
         public float WeightInKilograms { get; set; }
         public string Guid { get; set; }
+        public string Email { get; set; }
     }
 
     public struct PatientReturnModel
     {
-        public PatientReturnModel(int id, string firstName, string lastName, DateTime dateOfBirth, float weightInKilograms, int doctorId)
+        public PatientReturnModel(int id, string firstName, string lastName, DateTime dateOfBirth, float weightInKilograms, int doctorId, string email)
         {
             Id = id;
             FirstName = firstName;
@@ -41,6 +43,7 @@ namespace AppNiZiAPI.Models
             DateOfBirth = dateOfBirth;
             WeightInKilograms = weightInKilograms;
             HandlingDoctorId = doctorId;
+            Email = email;
         }
 
         public PatientReturnModel(Patient patient)
@@ -51,6 +54,7 @@ namespace AppNiZiAPI.Models
             DateOfBirth = patient.DateOfBirth;
             WeightInKilograms = patient.WeightInKilograms;
             HandlingDoctorId = patient.DoctorId;
+            Email = patient.Email;
         }
 
         public int Id { get; set; }
@@ -59,22 +63,25 @@ namespace AppNiZiAPI.Models
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public float WeightInKilograms { get; set; }
+        public string Email { get; set; }
     }
 
     public class PatientUpdateModel
     {
-        public PatientUpdateModel(int patientId, DateTime dateOfBirth, float weightInKilograms, int doctorId)
+        public PatientUpdateModel(int patientId, DateTime dateOfBirth, float weightInKilograms, int doctorId, string email)
         {
             PatientId = patientId;
             DateOfBirth = dateOfBirth;
             WeightInKilograms = weightInKilograms;
             DoctorId = doctorId;
+            Email = email;
         }
 
         public int PatientId { get; set; }
         public DateTime DateOfBirth { get; set; }
         public float WeightInKilograms { get; set; }
         public int DoctorId { get; set; }
+        public string Email { get; set; }
     }
 }
 

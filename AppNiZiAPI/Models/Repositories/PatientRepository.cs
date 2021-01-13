@@ -15,11 +15,12 @@ namespace AppNiZiAPI.Models.Repositories
     {
         Task<Patient> Select(int id);
         Task<Patient> Select(string guid);
-        Task<List<Patient>> List(int count);
+        Task<List<Patient>> List(int count, DateTime startDate, DateTime endDate);
         Task<bool> Delete(int patientId);
         Task<PatientLogin> GetPatientInfo(string guid);
         Task<PatientLogin> RegisterPatient(PatientLogin newPatient);
         Task<bool> Update(PatientUpdateModel patient);
+    
     }
 
     public class PatientRepository : IPatientRepository
@@ -56,6 +57,7 @@ namespace AppNiZiAPI.Models.Repositories
                     patient.WeightInKilograms = Convert.ToInt32(reader["weight"]);
                     patient.FirstName = reader["first_name"].ToString();
                     patient.LastName = reader["last_name"].ToString();
+                    patient.Email = reader["email"].ToString();
                 }
             }
 
@@ -84,8 +86,9 @@ namespace AppNiZiAPI.Models.Repositories
                     {
                         Guid = reader["guid"].ToString(),
                         DateOfBirth = Convert.ToDateTime(reader["date_of_birth"]),
-                        WeightInKilograms = Convert.ToInt32(reader["weight"])
-                    };
+                        WeightInKilograms = Convert.ToInt32(reader["weight"]),
+                        Email = reader["email"].ToString()
+                };
                 }
             }
 
@@ -95,8 +98,11 @@ namespace AppNiZiAPI.Models.Repositories
         /// <summary>
         /// Select all patients, up to count amount.
         /// </summary>
-        public async Task<List<Patient>> List(int count)
+        public async Task<List<Patient>> List(int count, DateTime startDate, DateTime endDate)
         {
+            string sqlStartDate = startDate.Date.ToString("yyyy-MM-dd").Replace("/", "-");
+            string sqlEndDate = endDate.Date.ToString("yyyy-MM-dd").Replace("/", "-");
+
             if (count == 0)
                 count = 999999;
 
@@ -107,7 +113,8 @@ namespace AppNiZiAPI.Models.Repositories
                 sqlConn.Open();
                 string sqlQuery = $"SELECT TOP(@COUNT) p.*, a.* " +
                     $"FROM Patient AS p " +
-                    $"INNER JOIN Account AS A ON p.account_id = a.id";
+                    $"INNER JOIN Account AS A ON p.account_id = a.id" +
+                    $"WHERE Patient.date_of_birth BETWEEN '{sqlStartDate}' AND '{sqlEndDate}'";
 
                 SqlCommand sqlCmd = new SqlCommand(sqlQuery, sqlConn);
                 sqlCmd.Parameters.Add("@COUNT", SqlDbType.Int).Value = count;
@@ -122,8 +129,9 @@ namespace AppNiZiAPI.Models.Repositories
                         DateOfBirth = Convert.ToDateTime(reader["date_of_birth"]),
                         WeightInKilograms = Convert.ToInt32(reader["weight"]),
                         FirstName = reader["first_name"].ToString(),
-                        LastName = reader["last_name"].ToString()
-                    };
+                        LastName = reader["last_name"].ToString(),
+                        Email = reader["email"].ToString()
+                };
 
                     patients.Add(patient);
                 }
@@ -310,8 +318,9 @@ namespace AppNiZiAPI.Models.Repositories
                         LastName = (string)reader["last_name"],
                         Guid = (string)reader["guid"],
                         PatientId = (int)reader["patient_id"],
-                        WeightInKilograms = float.Parse(reader["weight"].ToString())
-                    };
+                        WeightInKilograms = float.Parse(reader["weight"].ToString()),
+                        Email = reader["email"].ToString()
+                };
 
                     DoctorModel doctor = new DoctorModel
                     {
